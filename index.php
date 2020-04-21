@@ -1,6 +1,10 @@
 <?php
 mb_internal_encoding('UTF-8');
 require "cypher.php";
+//tableau OneCharacter
+$a = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+//tableau digraph
+$b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES', 'ST', 'EN', 'ED', 'TO', 'IT', 'OU', 'EA', 'HI', 'IS', 'OR');
 ?>
 <!DOCTYPE html>
 <html>
@@ -61,10 +65,10 @@ require "cypher.php";
                     </h3>
                 </div><!-- /.card-header -->
                 <div class="card-body">
-                    <div class="tab-content p-0" style="width:auto;overflow:auto;padding-bottom:2%">
+                    <div class="tab-content p-0">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-10">
+                                <div class="col-md-12" style="overflow:auto;padding-bottom:2%;">
                                     <table class="table table-striped table-bordered" style="text-align:center;font-size:small">
 
                                         <tr>
@@ -82,7 +86,6 @@ require "cypher.php";
                                                 <td><?php echo $show['lettre']; ?></td><?php
                                                                                     } ?>
                                         </tr>
-
 
                                         <tr>
                                             <th scope="col">English letter</th>
@@ -150,7 +153,7 @@ require "cypher.php";
                                         <select name="replace" class="">
                                             <?php
                                             $a = strtoupper("abcdefghijklmnopqrstuvwxyz");
-                                            for ($i = 0; $i < strlen($a); $i++) {
+                                            for ($i = 0; $i < count($a); $i++) {
                                             ?>
                                                 <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo $a[$i]; ?></option>
                                             <?php
@@ -158,12 +161,11 @@ require "cypher.php";
                                             ?>
                                         </select>
                                         <label for="p">with</label>
-                                        <select name="replace" class="">
+                                        <select name="with" class="">
                                             <?php
-                                            $b = "abcdefghijklmnopqrstuvwxyz";
-                                            for ($i = 0; $i < strlen($a); $i++) {
+                                            for ($i = 0; $i < count($a); $i++) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $b[$i]; ?>"><?php echo $b[$i]; ?></option>
+                                                <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo strtolower($a[$i]); ?></option>
                                             <?php
                                             }
                                             ?>
@@ -181,97 +183,91 @@ require "cypher.php";
                 </div>
             </div>
         </section>
+
+        <!------ ------------------------------------------------------------------------------------------------>
+
         <section class="col-lg-5">
             <!-- two character -->
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-calendar-alt"></i>&nbsp; &nbsp;
-                        <h3 class="card-title">One Character</h3>
+                        <h3 class="card-title">Digraphs</h3>
                     </h3>
                 </div><!-- /.card-header -->
                 <div class="card-body">
-                    <div class="tab-content p-0" style="width:auto;overflow:auto;padding-bottom:2%">
+                    <div class="tab-content p-0">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-10">
+                                <div class="col-md-12" style="overflow:auto;padding-bottom:2%;">
                                     <table class="table table-striped table-bordered" style="text-align:center;font-size:small">
 
                                         <tr>
                                             <th scope="col">Occurence</th>
                                             <?php
-                                            foreach ($count as $show) { ?>
-                                                <td><?php echo $show['nbrelettre'] . '.0'; ?></td><?php
+                                            foreach ($counterdigraph as $show) { ?>
+                                                <td><?php echo $show['nbredigraph'] . '.0'; ?></td><?php
                                                                                                 } ?>
                                         </tr>
 
                                         <tr>
                                             <th scope="col">Letter in text</th>
                                             <?php
-                                            foreach ($count as $show) { ?>
-                                                <td><?php echo $show['lettre']; ?></td><?php
+                                            foreach ($counterdigraph as $show) { ?>
+                                                <td><?php echo $show['digraph']; ?></td><?php
                                                                                     } ?>
                                         </tr>
 
-
                                         <tr>
-                                            <th scope="col">English letter</th>
-                                            <td>E</td>
-                                            <td>T</td>
-                                            <td>A</td>
-                                            <td>O</td>
-                                            <td>I</td>
-                                            <td>N</td>
-                                            <td>S</td>
-                                            <td>H</td>
-                                            <td>R</td>
-                                            <td>D</td>
-                                            <td>L</td>
-                                            <td>C</td>
-                                            <td>U</td>
-                                            <td>M</td>
-                                            <td>W</td>
-                                            <td>F</td>
-                                            <td>G</td>
-                                            <td>Y</td>
-                                            <td>P</td>
-                                            <td>B</td>
-                                            <td>V</td>
-                                            <td>K</td>
-                                            <td>J</td>
-                                            <td>X</td>
-                                            <td>Q</td>
-                                            <td>Z</td>
+                                            <th scope="col">English digraph</th>
+                                            <td>TH</td>
+                                            <td>HE</td>
+                                            <td>IN</td>
+                                            <td>ER</td>
+                                            <td>AN</td>
+                                            <td>RE</td>
+                                            <td>ND</td>
+                                            <td>AT</td>
+                                            <td>ON</td>
+                                            <td>NT</td>
+                                            <td>HA</td>
+                                            <td>ES</td>
+                                            <td>ST</td>
+                                            <td>EN</td>
+                                            <td>ED</td>
+                                            <td>TO</td>
+                                            <td>IT</td>
+                                            <td>OU</td>
+                                            <td>EA</td>
+                                            <td>HI</td>
+                                            <td>IS</td>
+                                            <td>OR</td>
                                         </tr>
 
                                         <tr>
-                                            <th scope="col">% English letter</th>
-                                            <td>12.7</td>
-                                            <td>9.1</td>
-                                            <td>8.2</td>
-                                            <td>7.5</td>
-                                            <td>7.0</td>
-                                            <td>6.7</td>
-                                            <td>6.3</td>
-                                            <td>6.1</td>
-                                            <td>6.0</td>
-                                            <td>4.3</td>
-                                            <td>4.0</td>
-                                            <td>2.8</td>
-                                            <td>2.8</td>
-                                            <td>2.4</td>
-                                            <td>2.4</td>
-                                            <td>2.2</td>
-                                            <td>2.0</td>
-                                            <td>2.0</td>
-                                            <td>1.9</td>
-                                            <td>1.5</td>
-                                            <td>1.0</td>
-                                            <td>0.8</td>
-                                            <td>0.15</td>
-                                            <td>0.15</td>
-                                            <td>0.10</td>
-                                            <td>0.07</td>
+                                            <th scope="col">% English digraph</th>
+                                            <td>1.52</td>
+                                            <td>1.28</td>
+                                            <td>0.94</td>
+                                            <td>0.94</td>
+                                            <td>0.82</td>
+                                            <td>0.68</td>
+                                            <td>0.63</td>
+                                            <td>0.59</td>
+                                            <td>0.57</td>
+                                            <td>0.56</td>
+                                            <td>0.56</td>
+                                            <td>0.56</td>
+                                            <td>0.55</td>
+                                            <td>0.55</td>
+                                            <td>0.53</td>
+                                            <td>0.52</td>
+                                            <td>0.50</td>
+                                            <td>0.50</td>
+                                            <td>0.47</td>
+                                            <td>0.46</td>
+                                            <td>0.46</td>
+                                            <td>0.43</td>
                                         </tr>
 
                                     </table>
@@ -279,8 +275,7 @@ require "cypher.php";
                                         <label for="p">Replace</label>
                                         <select name="replace" class="">
                                             <?php
-                                            $a = strtoupper("abcdefghijklmnopqrstuvwxyz");
-                                            for ($i = 0; $i < strlen($a); $i++) {
+                                            for ($i = 0; $i < count($a); $i++) {
                                             ?>
                                                 <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo $a[$i]; ?></option>
                                             <?php
@@ -288,12 +283,11 @@ require "cypher.php";
                                             ?>
                                         </select>
                                         <label for="p">with</label>
-                                        <select name="replace" class="">
+                                        <select name="with" class="">
                                             <?php
-                                            $b = "abcdefghijklmnopqrstuvwxyz";
-                                            for ($i = 0; $i < strlen($a); $i++) {
+                                            for ($i = 0; $i < count($b); $i++) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $b[$i]; ?>"><?php echo $b[$i]; ?></option>
+                                                <option class="form-control" value="<?php echo $b[$i]; ?>"><?php echo strtolower($b[$i]); ?></option>
                                             <?php
                                             }
                                             ?>

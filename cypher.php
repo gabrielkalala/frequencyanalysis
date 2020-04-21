@@ -1,11 +1,11 @@
 <?php
 $count = array();
+$counterdigraph = array();
 $alphabet = "abcdefghijklmnopqrstuvwxyz";
 $alpha = strtoupper($alphabet);
-$_POST['cryptext']='hvg bfy fc y tg y yh se  awer rt  yth 6y uy uk pl c x  gbh gn';
-$texte = $_POST['cryptext'];
-$texte = strtoupper($texte);
 $tailleaphabet = strlen($alpha);
+$counterdigraph = array(); //conter digraph
+$empiler = ""; //empiler digraph
 
 function OccurenceOneCharacter(){ //cmpte nombre d'occurence
     global $tailleaphabet, $alpha, $texte, $count; 
@@ -18,5 +18,29 @@ function OccurenceOneCharacter(){ //cmpte nombre d'occurence
     }
     return array_multisort($count, SORT_DESC);
 }
-OccurenceOneCharacter();
+
+function OccurenceDigraph(){
+    global $texte, $empiler, $counterdigraph, $taillemot;
+    for ($i = 0; $i < $taillemot; $i++) {
+        $digraph = substr($texte, $i, 2);
+        $digraph = str_replace(' ', '', $digraph);//supprimer space
+        if(strlen($digraph)>1){ //ssi la taille est sup a 2
+            if (stristr($empiler, $digraph) === FALSE) { //extraire une chaine
+                $nbredigraph = substr_count($texte, $digraph);;
+                $counterdigraph[$i]['nbredigraph'] = $nbredigraph;
+                $counterdigraph[$i]['digraph'] = $digraph;
+                $empiler = $empiler . $digraph;
+            }
+        }
+    }
+    return array_multisort($counterdigraph, SORT_DESC);     
+}
+
+if(isset($_POST['text'])){
+    $texte = $_POST['text'];
+    $texte = strtoupper($texte);
+    $taillemot = strlen($texte);
+    $oneCharacter = serialize(OccurenceOneCharacter());
+    $digraph = OccurenceDigraph();
+}
 ?>
