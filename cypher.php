@@ -35,17 +35,21 @@ function OccurenceDigraph(){ //occurence count digraph
     global $texte, $empiler, $counterdigraph, $taillemot;
     for ($i = 0; $i < $taillemot; $i++) {
         $digraph = substr($texte, $i, 2);
+        $digraph = str_replace('  ', '', $digraph); //supprimer space
         $digraph = str_replace(' ', '', $digraph);//supprimer space
-        if(strlen($digraph)>1){ //ssi la taille est sup a 2
+        if(strlen($digraph)>1){ //ssi la taille est egal 2
             if (stristr($empiler, $digraph) === FALSE) { //extraire une chaine
-                $nbredigraph = substr_count($texte, $digraph);;
+                $nbredigraph = substr_count($texte, $digraph);
                 $counterdigraph[$i]['nbredigraph'] = $nbredigraph;
                 $counterdigraph[$i]['digraph'] = $digraph;
                 $empiler = $empiler . $digraph;
             }
         }
+        $digraphs[$digraph] = $nbredigraph;
     }
-    return array_multisort($counterdigraph, SORT_DESC);     
+    $_SESSION['digraphs'] = $digraphs;
+    var_dump($_SESSION['digraphs']);
+    return array_multisort($_SESSION['digraphs'], SORT_DESC);     
 }
 
 if(isset($_POST['text'])){ /// if cypher text exist
@@ -55,11 +59,17 @@ if(isset($_POST['text'])){ /// if cypher text exist
     $_SESSION['text'] = $texte;
     $taillemot = strlen($texte);
     $oneCharacter = serialize(OccurenceOneCharacter());
-    $digraph = OccurenceDigraph();
+    $digraph = serialize(OccurenceDigraph());
 }
+
 if(isset($_SESSION['text']) && isset($_POST['swap'])){ //remplacement one character
     $one = $_SESSION['text'];
     $_SESSION['text'] = str_replace($_POST['replace'], $_POST['with'], $_SESSION['text']); //remplacement des lettre
     //var_dump($_SESSION['text']); var_dump($_POST['replace']); var_dump($_POST['with']);
+}
+
+if (isset($_SESSION['text']) && isset($_POST['swapD'])) { //remplacement Digraphs
+    $one = $_SESSION['text'];
+    $_SESSION['text'] = str_replace($_POST['replaceD'], $_POST['withD'], $_SESSION['text']); //remplacement des lettre
 }
 ?>

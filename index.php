@@ -51,7 +51,7 @@ require "cypher.php";
     </div><!-- /.card-body -->
 
     <div class="row" style="padding-top:1%" id="result">
-        <section class="col-lg-5 offset-lg-1">
+        <section class="col-lg-5 offset-lg-1" id="character">
             <!-- one character -->
             <div class="card card-info">
                 <div class="card-header">
@@ -70,12 +70,13 @@ require "cypher.php";
                                         <tr>
                                             <th scope="col">Occurence</th>
                                             <?php
-                                            if(isset($_SESSION['character'])){
+                                            if (isset($_SESSION['character'])) {
                                                 foreach ($_SESSION['character'] as $key => $value) {
 
                                             ?>
-                                                <td><?php echo $value . '.0'; ?></td>
-                                            <?php }}?>
+                                                    <td><?php echo $value . '.0'; ?></td>
+                                            <?php }
+                                            } ?>
                                         </tr>
 
                                         <tr>
@@ -83,8 +84,9 @@ require "cypher.php";
                                             <?php
                                             if (isset($_SESSION['character'])) {
                                                 foreach ($_SESSION['character'] as $key => $value) { ?>
-                                                <td><?php echo $key; ?></td><?php
-                                            } }?>
+                                                    <td><?php echo $key; ?></td><?php
+                                                                            }
+                                                                        } ?>
                                         </tr>
 
                                         <tr>
@@ -148,17 +150,19 @@ require "cypher.php";
                                         </tr>
 
                                     </table>
-                                    <form action="index.php" method="POST">
+                                    <form action="index.php#character" method="POST">
                                         <label for="p">Replace</label>
                                         <select name="replace" class="">
                                             <?php
                                             if (isset($_SESSION['character'])) {
                                                 foreach ($_SESSION['character'] as $key => $value) {
-                                                    if($value>0){
+                                                    if ($value > 0) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $key; ?>"><?php echo $key; ?></option>
+                                                        <option class="form-control" value="<?php echo $key; ?>"><?php echo $key; ?></option>
                                             <?php
-                                            }}}
+                                                    }
+                                                }
+                                            }
                                             ?>
                                         </select>
                                         <label for="p">with</label>
@@ -175,11 +179,14 @@ require "cypher.php";
                                     </form>
 
                                 </div><br /> <br />
-                                <p> Cypher Text : <br /> <?php if (isset($_SESSION['text'])){ echo $_SESSION['originalText'];}?> </p>
-                                <div class="alert alert-light" role="alert">
-                                    RESULT : <br /> <br />
+                                <p> Cypher Text : <br />
+                                    <?php if (isset($_SESSION['text'])) {
+                                        echo $_SESSION['originalText'];
+                                    } ?> </p>
+                                <div class="alert alert-dark" role="alert">
+                                    PLAIN TEXT : <br /> <br />
                                     <p>
-                                        <?php if (isset($_SESSION['text']) && isset($_POST['swap'])) {
+                                        <?php if (isset($_SESSION['text'])) {
                                             echo $_SESSION['text'];
                                         } ?>
                                     </p>
@@ -193,7 +200,7 @@ require "cypher.php";
 
         <!------ ------------------------------------------------------------------------------------------------>
 
-        <section class="col-lg-5">
+        <section class="col-lg-5" id="digraph">
             <!-- two character -->
             <div class="card card-info">
                 <div class="card-header">
@@ -212,17 +219,21 @@ require "cypher.php";
                                         <tr>
                                             <th scope="col">Occurence</th>
                                             <?php
-                                            foreach ($counterdigraph as $show) { ?>
-                                                <td><?php echo $show['nbredigraph'] . '.0'; ?></td><?php
-                                                                                                } ?>
+                                            if (isset($_SESSION['digraphs'])) {
+                                                foreach ($_SESSION['digraphs'] as $key => $value) { ?>
+                                                    <td><?php echo $value . '.0'; ?></td><?php
+                                                                                        }
+                                                                                    } ?>
                                         </tr>
 
                                         <tr>
-                                            <th scope="col">Letter in text</th>
+                                            <th scope="col">Digraphs in text</th>
                                             <?php
-                                            foreach ($counterdigraph as $show) { ?>
-                                                <td><?php echo $show['digraph']; ?></td><?php
-                                                                                    } ?>
+                                            if (isset($_SESSION['digraphs'])) {
+                                                foreach ($_SESSION['digraphs'] as $key => $value) { ?>
+                                                    <td><?php echo $key; ?></td><?php
+                                                                            }
+                                                                        } ?>
                                         </tr>
 
                                         <tr>
@@ -278,33 +289,46 @@ require "cypher.php";
                                         </tr>
 
                                     </table>
-                                    <form action="index.php" method="POST">
+                                    <form action="index.php#digraph" method="POST">
                                         <label for="p">Replace</label>
-                                        <select name="replace" class="">
+                                        <select name="replaceD" class="">
                                             <?php
-                                            for ($i = 0; $i < strlen($a); $i++) {
+                                            if (isset($_SESSION['digraphs'])) {
+                                                foreach ($_SESSION['digraphs'] as $key => $value) {
+                                                    if ($value > 0) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo strtoupper($a[$i]); ?></option>
+                                                        <option class="form-control" value="<?php echo $key; ?>"><?php echo $key; ?></option>
                                             <?php
+                                                    }
+                                                }
                                             }
                                             ?>
                                         </select>
                                         <label for="p">with</label>
-                                        <select name="with" class="">
+                                        <select name="withD" class="">
                                             <?php
                                             for ($i = 0; $i < count($b); $i++) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $b[$i]; ?>"><?php echo strtolower($b[$i]); ?></option>
+                                                <option class="form-control" value="<?php echo strtolower($b[$i]); ?>"><?php echo strtolower($b[$i]); ?></option>
                                             <?php
                                             }
                                             ?>
                                         </select>
-                                        <button type="submit" name="analyse" value="analyse" class="btn btn-primary">swap</button>
+                                        <button type="submit" name="swapD" value="swapD" class="btn btn-primary">swap</button>
                                     </form>
 
-                                </div><br />
-                                <div class="alert alert-light" role="alert">
-                                    RESULT : <br /> <br />
+                                </div><br /> <br />
+                                <p> Cypher Text : <br />
+                                    <?php if (isset($_SESSION['text'])) {
+                                        echo $_SESSION['originalText'];
+                                    } ?> </p>
+                                <div class="alert alert-dark" role="alert">
+                                    PLAIN TEXT : <br /> <br />
+                                    <p>
+                                        <?php if (isset($_SESSION['text'])) {
+                                            echo $_SESSION['text'];
+                                        } ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
