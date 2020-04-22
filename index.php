@@ -1,10 +1,6 @@
 <?php
 mb_internal_encoding('UTF-8');
 require "cypher.php";
-//tableau OneCharacter
-$a = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
-//tableau digraph
-$b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES', 'ST', 'EN', 'ED', 'TO', 'IT', 'OU', 'EA', 'HI', 'IS', 'OR');
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +20,7 @@ $b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed" style="background: #ddd;">
-    <div class="row" style="padding-top:3%">
+    <div class="row" style="padding-top:2%">
         <section class="col-lg-6 offset-lg-3 connectedSortable">
             <div class="card card-info">
                 <div class="card-header">
@@ -74,9 +70,11 @@ $b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES
                                         <tr>
                                             <th scope="col">Occurence</th>
                                             <?php
-                                            foreach ($count as $show) { ?>
+                                            foreach ($count as $show) {
+                                            
+                                            ?>
                                                 <td><?php echo $show['nbrelettre'] . '.0'; ?></td><?php
-                                                                                                } ?>
+                                            }  //var_dump($_SESSION['nbrelettre']); ?>
                                         </tr>
 
                                         <tr>
@@ -152,10 +150,9 @@ $b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES
                                         <label for="p">Replace</label>
                                         <select name="replace" class="">
                                             <?php
-                                            $a = strtoupper("abcdefghijklmnopqrstuvwxyz");
-                                            for ($i = 0; $i < count($a); $i++) {
+                                            foreach ($count as $show) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo $a[$i]; ?></option>
+                                                <option class="form-control" value="<?php echo $show['lettre']; ?>"><?php echo $show['lettre']; ?></option>
                                             <?php
                                             }
                                             ?>
@@ -163,19 +160,24 @@ $b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES
                                         <label for="p">with</label>
                                         <select name="with" class="">
                                             <?php
-                                            for ($i = 0; $i < count($a); $i++) {
+                                            for ($i = 0; $i < strlen($a); $i++) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo strtolower($a[$i]); ?></option>
+                                                <option class="form-control" value="<?php echo strtolower($a[$i]); ?>"><?php echo strtolower($a[$i]); ?></option>
                                             <?php
                                             }
                                             ?>
                                         </select>
-                                        <button type="submit" name="analyse" value="analyse" class="btn btn-primary">swap</button>
+                                        <button type="submit" name="swap" value="swap" class="btn btn-primary">swap</button>
                                     </form>
 
                                 </div><br />
                                 <div class="alert alert-light" role="alert">
                                     RESULT : <br /> <br />
+                                    <p>
+                                        <?php if(isset($_SESSION['text']) && isset($_POST['swap'])){
+                                            echo $_SESSION['text'];
+                                        }?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -275,9 +277,9 @@ $b = array('TH', 'HE', 'IN', 'ER', 'AN', 'RE', 'ND', 'AT', 'ON', 'NT', 'HA', 'ES
                                         <label for="p">Replace</label>
                                         <select name="replace" class="">
                                             <?php
-                                            for ($i = 0; $i < count($a); $i++) {
+                                            for ($i = 0; $i < strlen($a); $i++) {
                                             ?>
-                                                <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo $a[$i]; ?></option>
+                                                <option class="form-control" value="<?php echo $a[$i]; ?>"><?php echo strtoupper($a[$i]); ?></option>
                                             <?php
                                             }
                                             ?>
