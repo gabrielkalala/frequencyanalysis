@@ -154,8 +154,8 @@ require "cypher.php";
                                         <label for="p">Replace</label>
                                         <select name="replace" class="">
                                             <?php
-                                            if (isset($_SESSION['character'])) {
-                                                foreach ($_SESSION['character'] as $key => $value) {
+                                            if (isset($_SESSION['selectCharacter'])) {
+                                                foreach ($_SESSION['selectCharacter'] as $key => $value) {
                                                     if ($value > 0) {
                                             ?>
                                                         <option class="form-control" value="<?php echo $key; ?>"><?php echo $key; ?></option>
@@ -181,7 +181,7 @@ require "cypher.php";
                                 </div><br /> <br />
                                 <p> Cypher Text : <br />
                                     <?php if (isset($_SESSION['text'])) {
-                                        echo $_SESSION['originalText'];
+                                        echo strtoupper($_SESSION['originalText']);
                                     } ?> </p>
                                 <div class="alert alert-dark" role="alert">
                                     PLAIN TEXT : <br /> <br />
@@ -293,8 +293,8 @@ require "cypher.php";
                                         <label for="p">Replace</label>
                                         <select name="replaceD" class="">
                                             <?php
-                                            if (isset($_SESSION['digraphs'])) {
-                                                foreach ($_SESSION['digraphs'] as $key => $value) {
+                                            if (isset($_SESSION['selectDigraphs'])) {
+                                                foreach ($_SESSION['selectDigraphs'] as $key => $value) {
                                                     if ($value > 0) {
                                             ?>
                                                         <option class="form-control" value="<?php echo $key; ?>"><?php echo $key; ?></option>
@@ -320,7 +320,7 @@ require "cypher.php";
                                 </div><br /> <br />
                                 <p> Cypher Text : <br />
                                     <?php if (isset($_SESSION['text'])) {
-                                        echo $_SESSION['originalText'];
+                                        echo strtoupper($_SESSION['originalText']);
                                     } ?> </p>
                                 <div class="alert alert-dark" role="alert">
                                     PLAIN TEXT : <br /> <br />

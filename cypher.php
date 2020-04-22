@@ -22,12 +22,12 @@ function OccurenceOneCharacter(){ //cmpte nombre d'occurence
         $lettre = substr($alpha, $i, 1);
         $nbrelettre = substr_count($texte, $lettre);//nbre occurence
         
-        $count[$i]['nbrelettre'] = $nbrelettre;
-        $count[$i]['lettre'] = $lettre;
+        //$count[$i]['nbrelettre'] = $nbrelettre;
+        //$count[$i]['lettre'] = $lettre;
         $character[$lettre] = $nbrelettre; 
     }
     $_SESSION['character'] = $character;
-    //var_dump($_SESSION['character']); //ar_dump($character);
+    $_SESSION['selectCharacter'] = $character;
     return array_multisort($_SESSION['character'], SORT_DESC);
 }
 
@@ -48,7 +48,7 @@ function OccurenceDigraph(){ //occurence count digraph
         $digraphs[$digraph] = $nbredigraph;
     }
     $_SESSION['digraphs'] = $digraphs;
-    var_dump($_SESSION['digraphs']);
+    $_SESSION['selectDigraphs'] = $digraphs;
     return array_multisort($_SESSION['digraphs'], SORT_DESC);     
 }
 
@@ -65,11 +65,15 @@ if(isset($_POST['text'])){ /// if cypher text exist
 if(isset($_SESSION['text']) && isset($_POST['swap'])){ //remplacement one character
     $one = $_SESSION['text'];
     $_SESSION['text'] = str_replace($_POST['replace'], $_POST['with'], $_SESSION['text']); //remplacement des lettre
-    //var_dump($_SESSION['text']); var_dump($_POST['replace']); var_dump($_POST['with']);
+    //delete replace character
+    unset($_SESSION['selectCharacter'][$_POST['replace']]);
+    $a = str_replace($_POST['with'], '', $a);
 }
 
 if (isset($_SESSION['text']) && isset($_POST['swapD'])) { //remplacement Digraphs
     $one = $_SESSION['text'];
     $_SESSION['text'] = str_replace($_POST['replaceD'], $_POST['withD'], $_SESSION['text']); //remplacement des lettre
+    //delete replace digraphs
+    unset($_SESSION['selectDigraphs'][$_POST['replaceD']]);
 }
 ?>
