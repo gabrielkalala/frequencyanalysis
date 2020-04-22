@@ -70,19 +70,21 @@ require "cypher.php";
                                         <tr>
                                             <th scope="col">Occurence</th>
                                             <?php
-                                            foreach ($count as $show) {
-                                            
+                                            if(isset($_SESSION['character'])){
+                                                foreach ($_SESSION['character'] as $key => $value) {
+
                                             ?>
-                                                <td><?php echo $show['nbrelettre'] . '.0'; ?></td><?php
-                                            }  //var_dump($_SESSION['nbrelettre']); ?>
+                                                <td><?php echo $value . '.0'; ?></td>
+                                            <?php }}?>
                                         </tr>
 
                                         <tr>
                                             <th scope="col">Letter in text</th>
                                             <?php
-                                            foreach ($count as $show) { ?>
-                                                <td><?php echo $show['lettre']; ?></td><?php
-                                                                                    } ?>
+                                            if (isset($_SESSION['character'])) {
+                                                foreach ($_SESSION['character'] as $key => $value) { ?>
+                                                <td><?php echo $key; ?></td><?php
+                                            } }?>
                                         </tr>
 
                                         <tr>
@@ -150,11 +152,13 @@ require "cypher.php";
                                         <label for="p">Replace</label>
                                         <select name="replace" class="">
                                             <?php
-                                            foreach ($count as $show) {
+                                            if (isset($_SESSION['character'])) {
+                                                foreach ($_SESSION['character'] as $key => $value) {
+                                                    if($value>0){
                                             ?>
-                                                <option class="form-control" value="<?php echo $show['lettre']; ?>"><?php echo $show['lettre']; ?></option>
+                                                <option class="form-control" value="<?php echo $key; ?>"><?php echo $key; ?></option>
                                             <?php
-                                            }
+                                            }}}
                                             ?>
                                         </select>
                                         <label for="p">with</label>
@@ -170,13 +174,14 @@ require "cypher.php";
                                         <button type="submit" name="swap" value="swap" class="btn btn-primary">swap</button>
                                     </form>
 
-                                </div><br />
+                                </div><br /> <br />
+                                <p> Cypher Text : <br /> <?php if (isset($_SESSION['text'])){ echo $_SESSION['originalText'];}?> </p>
                                 <div class="alert alert-light" role="alert">
                                     RESULT : <br /> <br />
                                     <p>
-                                        <?php if(isset($_SESSION['text']) && isset($_POST['swap'])){
+                                        <?php if (isset($_SESSION['text']) && isset($_POST['swap'])) {
                                             echo $_SESSION['text'];
-                                        }?>
+                                        } ?>
                                     </p>
                                 </div>
                             </div>
